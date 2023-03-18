@@ -1,13 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
-import Employee from './components/Employee';
-import Counter from './components/Counter';
-import Login from './components/Login';
+import LogInForm from './components/LogInForm';
+import SingleErrorBoundary from './components/SingleErrorBoundary';
+import TestError from './components/TestError';
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      {/* <Main /> */}
+      {/* <TestError /> */}
+      <SingleErrorBoundary />
     </div>
   );
 }
