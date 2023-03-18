@@ -1,0 +1,40 @@
+componentWillUnmount(): 
+a simple toggle button which will show our Child component if the state is set to true. So after clicking on the button an alert will popup displaying This will unmount The alert will popup because the component is about to be removed from the DOM which in our case is the Child component.
+
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+class ComponentWillUnmount extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: true
+    };
+  }
+  render() {
+    return (
+      <>
+        <p>{this.state.show ? <Child /> : null}</p>
+        <button
+          onClick={() => {
+            this.setState({ show: !this.state.show });
+          }}
+        >
+          Click me to toggle
+        </button>
+      </>
+    );
+  }
+}
+
+class Child extends React.Component {
+  componentWillUnmount() {
+    alert("This will unmount");
+  }
+  render() {
+    return <>I am a child component</>;
+  }
+}
+
+ReactDOM.render(<ComponentWillUnmount />, document.getElementById("root"));

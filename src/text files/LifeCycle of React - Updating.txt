@@ -1,0 +1,180 @@
+https://medium.com/how-to-react/react-life-cycle-methods-with-examples-2bdb7465332b
+
+(2) shouldComponentUpdate()
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+class Music extends React.Component {
+  constructor() {
+    super();
+    this.state = { Instrument: "Guitar" };
+  }
+  shouldComponentUpdate() {
+    return false;
+  }
+  change = () => {
+    this.setState({ Instrument: "Drums" });
+  };
+
+  render() {
+    return (
+      <div>
+              <h1>I know how to play {this.state.Instrument}</h1>
+              
+        <button type="button" onClick={this.change}>
+          Change Insrument
+        </button>
+              
+      </div>
+    );
+  }
+}
+ReactDOM.render(<Music />, document.getElementById("root"));
+
+
+
+(4) getSnapshotBeforeUpdate()
+
+class Music extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {Instrument : "Guitar"};
+    }
+    componentDidMount() {
+      setTimeout(() => {this.setState({Instrument: "Drums"})}, 2000)
+    }
+    getSnapshotBeforeUpdate(prevProps, prevState){
+    document.getElementById("CON1").innerHTML = "Before the update, the Instrument was " + prevState.Instrument;
+    }
+    componentDidUpdate() {
+      document.getElementById("CON2").innerHTML = "The updated Instrument is " + this.state.Instrument;
+    }
+    render() {
+      return (
+        <div>
+          <h1>I know how to play {this.state.Instrument}</h1>
+          <div id="CON1"></div>
+          <div id="CON2"></div>
+        </div>
+      ); }}
+  ReactDOM.render(<Music />, document.getElementById('root'));
+
+
+
+(5) componentDidUpdate()
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+class Music extends React.Component {
+     constructor(props) {
+       super(props);
+       this.state = {Instrument: "Guitar"};
+     }
+     componentDidMount() {
+       setTimeout(() => {
+         this.setState({Instrument: "Drums"})}, 2000)
+     }
+     componentDidUpdate() {
+       document.getElementById("CON").innerHTML ="The updated Instrument is " + this.state.Instrument;
+     }
+     render() {
+       return (
+         <div>
+         <h1>I know how to play {this.state.Instrument}</h1>
+         <div id="CON"></div>
+         </div>
+       );}}
+   
+   ReactDOM.render(<Music />, document.getElementById('root'));
+
+
+====================================================================================================
+Question 1:
+Change the value from "shouldComponentUpdate Method" to “componentDidMount Method” after 5 seconds 
+
+
+Solution 1:
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+class ShouldComponentUpdateMethod extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "shouldComponentUpdate Method"
+    };
+  }
+  shouldComponentUpdate() {
+    return true;   //Change to true for state to update
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ name: "componentDidMount Method" });
+    }, 5000);
+  }
+  render() {
+    return (
+      <div>
+        <p>This is a {this.state.name}</p>
+      </div>
+    );
+  }
+}
+ReactDOM.render(
+  <ShouldComponentUpdateMethod />,
+  document.getElementById("root")
+);
+
+In the above example, you will notice that first I have initialized the name state inside the constructor method and after that changed state using setState inside componentDidMount method. So basically the name state should be changed from "shouldComponentUpdate Method" to “componentDidMount Method” after 5 seconds but it didn’t change because of shouldComponentUpdate set to false, If you change that true the state will be updated.
+
+================================================================================================
+Question 2: 
+change the value from constructor Method to componentDidMount Method and display the current and previous state as well using the getSnapshotBeforeUpdate()
+
+
+Solution 2:
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+class GetSnapshotBeforeUpdateMethod extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "constructor Method"
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ name: "componentDidMount Method" });
+    }, 5000);
+  }
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    document.getElementById("previous-state").innerHTML =
+      "The previous state was " + prevState.name;
+  }
+  componentDidUpdate() {
+    document.getElementById("current-state").innerHTML =
+      "The current state is " + this.state.name;
+  }
+  render() {
+    return (
+      <>
+        <h5>This is a {this.state.name}</h5>
+        <p id="current-state"></p>
+        <p id="previous-state"></p>
+      </>
+    );
+  }
+}
+ReactDOM.render(
+  <GetSnapshotBeforeUpdateMethod />,
+  document.getElementById("root")
+);
+
+In the above example, we initialized our name state as constructor Method after that changed that using setState in componentDidMount method to componentDidMount Method . So my previous state was constructor Method and the current state is componentDidMount Method So now I can get my previous State from the getSnapshotBeforeUpdate method. So using the getSnapshotBeforeUpdate method I have printed my previous state to our DOM using document.getElementById(‘previous-state’).innerHTML = “The previous state was “ + prevState.name.

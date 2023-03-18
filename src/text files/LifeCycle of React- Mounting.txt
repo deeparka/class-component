@@ -1,0 +1,66 @@
+1) contructor:
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+class Music extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {instrument: "Guitar"};
+    }
+    render() {
+     return (
+     <h1>I know how to play {this.state.instrument}</h1>
+     );
+    }
+  }
+  
+  ReactDOM.render(<Music />, document.getElementById('root'));
+
+
+
+2) getDerivedStateFromProps()
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+class Music extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { instrument: "Guitar" };
+  }
+  static getDerivedStateFromProps(props, state) {
+    return { instrument: props.New };
+  }
+  render() {
+    return <h1>I know how to play {this.state.instrument}</h1>;
+  }
+}
+ReactDOM.render(<Music New="Drums" />, document.getElementById("root"));
+
+
+
+4) componentDidMount() 
+
+import React,{Component} from 'react';
+import ReactDOM from 'react-dom';
+
+class Music extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {instrument: "Guitar"};
+    }
+    componentDidMount() {
+      setTimeout(() => {
+        this.setState({instrument: "Drums"})
+      }, 1000)
+    }
+    render() {
+      return (
+        <h1>I know how to play {this.state.instrument}</h1>
+      );
+    }
+  }
+  
+  ReactDOM.render(<Music />, document.getElementById('root'));
+
